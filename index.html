@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manish Ratan — Backend & Full-Stack Developer</title>
+  <meta name="description" content="Portfolio of Manish Ratan, a Backend & Full-Stack Developer building reliable, scalable and user-focused applications." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#040906" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply saved theme before paint to avoid a flash
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+    // Mark JS as available. If script.js never starts (blocked, offline, error),
+    // drop all hide-until-animated styles after 4s so the page is never left blank.
+    document.documentElement.classList.add('js');
+    setTimeout(function () {
+      if (!window.__siteReady) {
+        document.documentElement.classList.remove('intro', 'intro-run', 'intro-reveal');
+        document.documentElement.classList.add('js-failed');
+      }
+    }, 4000);
+    // Cinematic intro: once per browser session, never with reduced motion
+    (function () {
+      var played = false;
+      try { played = sessionStorage.getItem('mr-intro') === '1'; } catch (e) {}
+      if (!played && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('intro');
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ============ UI CHROME ============ -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#home" class="brand" aria-label="Manish Ratan — home">
+        <span class="brand__logo">MR</span>
+        <span class="brand__name">Manish Ratan</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Primary">
+        <span class="nav__indicator" id="navIndicator"></span>
+        <a href="#home" class="nav__link active" data-section="home">Home</a>
+        <a href="#about" class="nav__link" data-section="about">About</a>
+        <a href="#skills" class="nav__link" data-section="skills">Skills</a>
+        <a href="#projects" class="nav__link" data-section="projects">Projects</a>
+        <a href="#experience" class="nav__link" data-section="experience">Experience</a>
+        <a href="#contact" class="nav__link" data-section="contact">Contact</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.6" y1="4.6" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.4" y2="19.4"/><line x1="4.6" y1="19.4" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.4" y2="4.6"/></g></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero__frame" id="heroFrame">
+          <!-- animated border: a rotating gradient inside a static ring mask (GPU-composited) -->
+          <span class="hero__ring" aria-hidden="true"><span></span></span>
+          <!-- topographic contour decoration -->
+          <svg class="contours contours--left" viewBox="0 0 300 400" aria-hidden="true">
+            <path d="M-20 380 C60 330 40 260 120 230 S210 120 180 40"/>
+            <path d="M-20 400 C70 350 70 280 150 250 S240 140 210 40"/>
+            <path d="M-20 420 C80 370 100 300 180 270 S270 160 240 40"/>
+            <path d="M-20 440 C90 390 130 320 210 290 S300 180 270 40"/>
+          </svg>
+          <svg class="contours contours--right" viewBox="0 0 300 400" aria-hidden="true">
+            <path d="M320 -20 C250 40 270 110 200 150 S110 260 150 420"/>
+            <path d="M320 0 C240 60 240 130 170 170 S80 280 120 420"/>
+            <path d="M320 20 C230 80 210 150 140 190 S50 300 90 420"/>
+          </svg>
+
+          <!-- Illustrated night scene -->
+          <div class="hero__scene" aria-hidden="true">
+            <!-- sky: plain CSS gradient (static) -->
+            <div class="scene-sky"></div>
+
+            <!-- moon glow on its own layer: the pulse is opacity-only, so the GPU
+                 composites it without repainting the illustration -->
+            <svg class="scene-svg scene-glow" data-scroll-depth="0.12" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <radialGradient id="moonGlow">
+                  <stop offset="0" style="stop-color:var(--moon)" stop-opacity=".55"/>
+                  <stop offset=".35" style="stop-color:var(--moon)" stop-opacity=".18"/>
+                  <stop offset="1" style="stop-color:var(--moon)" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <circle cx="400" cy="250" r="230" fill="url(#moonGlow)"/>
+            </svg>
+
+            <!-- stars: two layers twinkling out of phase (opacity-only, composited) -->
+            <svg class="scene-svg scene-stars" data-scroll-depth="0.06" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
+              <circle cx="120" cy="60" r="1.2"/><circle cx="330" cy="40" r="1.4"/><circle cx="610" cy="40" r="1.3"/>
+              <circle cx="790" cy="60" r="1.5"/><circle cx="580" cy="160" r=".9"/><circle cx="60" cy="140" r="1"/>
+            </svg>
+            <svg class="scene-svg scene-stars scene-stars--b" data-scroll-depth="0.06" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
+              <circle cx="260" cy="110" r="1"/><circle cx="520" cy="80" r="1"/><circle cx="700" cy="120" r="1"/>
+              <circle cx="200" cy="180" r=".9"/><circle cx="860" cy="150" r="1.1"/><circle cx="420" cy="30" r="1"/>
+            </svg>
+
+            <!-- main illustration: static SVG, moved as one GPU layer on scroll -->
+            <svg class="scene-svg scene-main" data-scroll-depth="0.2" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <radialGradient id="moonFill" cx=".4" cy=".35">
+                  <stop offset="0" style="stop-color:var(--moon-core)"/>
+                  <stop offset="1" style="stop-color:var(--moon)"/>
+                </radialGradient>
+                <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" style="stop-color:var(--mist)" stop-opacity="0"/>
+                  <stop offset=".5" style="stop-color:var(--mist)" stop-opacity=".35"/>
+                  <stop offset="1" style="stop-color:var(--mist)" stop-opacity="0"/>
+                </linearGradient>
+                <symbol id="pine" viewBox="0 0 40 100">
+                  <path d="M20 0 L28 20 L24 20 L32 40 L27 40 L36 62 L30 62 L40 85 L22 85 L22 100 L18 100 L18 85 L0 85 L10 62 L4 62 L13 40 L8 40 L16 20 L12 20Z"/>
+                </symbol>
+              </defs>
+
+              <!-- moon -->
+              <g class="layer" data-depth="0.08">
+                <circle cx="400" cy="250" r="82" fill="url(#moonFill)"/>
+                <g class="clouds">
+                  <rect x="250" y="268" width="170" height="5" rx="2.5"/>
+                  <rect x="370" y="282" width="210" height="4" rx="2"/>
+                  <rect x="290" y="296" width="120" height="3" rx="1.5"/>
+                </g>
+              </g>
+
+              <!-- far mountains -->
+              <path class="layer" data-depth="0.15" style="fill:var(--m1)"
+                d="M-40 340 L60 290 L140 315 L230 262 L320 305 L400 272 L470 300 L560 252 L650 296 L740 266 L820 292 L940 262 V640 H-40Z"/>
+              <rect class="layer" data-depth="0.18" x="-40" y="300" width="980" height="90" fill="url(#mist)"/>
+
+              <!-- mid mountains -->
+              <path class="layer" data-depth="0.25" style="fill:var(--m2)"
+                d="M-40 390 L70 335 L180 372 L280 322 L370 366 L460 338 L540 372 L640 330 L730 362 L820 328 L940 356 V640 H-40Z"/>
+
+              <!-- forest -->
+              <g class="layer forest" data-depth="0.38" style="fill:var(--m3)">
+                <path d="M-40 455 Q200 420 450 440 T940 430 V640 H-40Z"/>
+                <use href="#pine" x="-10" y="380" width="34" height="85"/>
+                <use href="#pine" x="30" y="395" width="26" height="65"/>
+                <use href="#pine" x="70" y="370" width="38" height="95"/>
+                <use href="#pine" x="115" y="392" width="28" height="70"/>
+                <use href="#pine" x="150" y="378" width="34" height="85"/>
+                <use href="#pine" x="195" y="398" width="24" height="60"/>
+                <use href="#pine" x="230" y="382" width="32" height="80"/>
+                <use href="#pine" x="270" y="400" width="24" height="60"/>
+                <use href="#pine" x="300" y="388" width="30" height="75"/>
+                <use href="#pine" x="340" y="404" width="22" height="55"/>
+                <use href="#pine" x="372" y="392" width="28" height="70"/>
+                <use href="#pine" x="405" y="406" width="22" height="55"/>
+              </g>
+
+              <!-- cliff + hiker -->
+              <g class="layer" data-depth="0.55">
+                <path style="fill:var(--m4)" d="M330 640 L360 560 L400 500 L450 470 L500 452 L590 448 L635 462 L680 500 L720 560 L750 640Z"/>
+                <path class="rim" d="M450 470 L500 452 L590 448"/>
+                <g transform="translate(545 450)"><g class="hiker" style="fill:var(--silhouette)">
+                  <!-- legs -->
+                  <path d="M-15 0 L-11 -58 L-2 -58 L-5 0Z"/>
+                  <path d="M3 0 L1 -58 L10 -58 L14 0Z"/>
+                  <rect x="-18" y="-5" width="15" height="6" rx="2"/>
+                  <rect x="2" y="-5" width="15" height="6" rx="2"/>
+                  <!-- backpack -->
+                  <rect x="8" y="-118" width="22" height="50" rx="7"/>
+                  <rect x="10" y="-76" width="20" height="8" rx="3"/>
+                  <!-- torso -->
+                  <path d="M-14 -56 L-16 -108 Q-12 -122 0 -124 Q12 -122 14 -110 L13 -56Z"/>
+                  <!-- arm -->
+                  <path d="M-12 -114 L-21 -82 L-17 -63 L-11 -64 L-14 -82 L-6 -106Z"/>
+                  <!-- head -->
+                  <rect x="-4" y="-130" width="8" height="8"/>
+                  <circle cx="0" cy="-137" r="10"/>
+                  <path d="M-11 -140 Q-10 -151 1 -151 Q11 -150 11 -141 L-14 -140Z"/>
+                  <!-- rim light facing the moon -->
+                  <path class="rim" d="M-16 -108 L-14 -56 M-11 -58 L-15 0 M-10 -140 Q-11 -147 -6 -150 M-12 -114 L-21 -82"/>
+                </g></g>
+              </g>
+
+              <!-- foreground tree -->
+              <g class="layer" data-depth="0.8" style="fill:var(--silhouette)">
+                <use href="#pine" x="790" y="110" width="170" height="510"/>
+                <use href="#pine" x="-50" y="430" width="90" height="190"/>
+                <path d="M-40 600 Q120 560 300 590 L300 640 H-40Z"/>
+              </g>
+            </svg>
+            <canvas class="fireflies" id="fireflies"></canvas>
+          </div>
+
+          <!-- Hero content -->
+          <div class="hero__content">
+            <div class="badge reveal" data-delay="0">
+              <span class="badge__dot"></span> Open for opportunities
+            </div>
+            <p class="hero__hi reveal" data-delay="1">Hi, I'm</p>
+            <h1 class="hero__name reveal" data-delay="2">
+              <span class="split">Manish</span> <span class="split accent">Ratan</span>
+            </h1>
+            <h2 class="hero__role reveal" data-delay="3">
+              <span id="typed">Backend &amp; Full-Stack Developer</span><span class="caret"></span>
+            </h2>
+            <p class="hero__desc reveal" data-delay="4">
+              Designing and building reliable, scalable, and user-focused applications.
+            </p>
+            <div class="hero__cta reveal" data-delay="5">
+              <a href="#projects" class="btn btn--primary magnetic">
+                <span>View Projects</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a href="resume.pdf" class="btn btn--ghost magnetic" download>
+                <span>Download Resume</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+              </a>
+            </div>
+            <div class="socials reveal" data-delay="6">
+              <a href="https://github.com/ManishRatan17" target="_blank" rel="noopener" aria-label="GitHub" class="social magnetic">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/manish-ratan-3597bb256/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social magnetic">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg>
+              </a>
+              <a href="mailto:manishratancollege@gmail.com" aria-label="Email" class="social magnetic">
+                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="hero__stats">
+            <div class="stat glass reveal-right" data-delay="3">
+              <div class="stat__icon"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+              <div><strong><span class="counter" data-target="3">0</span>+</strong><small>Projects</small></div>
+            </div>
+            <div class="stat glass reveal-right" data-delay="4">
+              <div class="stat__icon"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg></div>
+              <div><strong>MCA</strong><small>PES University</small></div>
+            </div>
+            <div class="stat glass reveal-right" data-delay="5">
+              <div class="stat__icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".6"/></svg></div>
+              <div><strong>Full-Stack</strong><small>Developer</small></div>
+            </div>
+          </div>
+
+          <a href="#about" class="scroll-hint" aria-label="Scroll to About">
+            <span class="scroll-hint__mouse"><span></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">About</span>
+          <h2 class="section__title">Turning ideas into <span class="accent">robust systems</span></h2>
+        </div>
+
+        <div class="about">
+          <div class="about__text">
+            <p class="reveal">
+              I'm a backend-focused Full-Stack Developer pursuing my <strong>MCA at PES University</strong>, passionate about building scalable applications and solving real-world engineering challenges.
+            </p>
+            <p class="reveal" data-delay="1">
+              I specialize in developing robust backend systems, designing efficient REST APIs, managing databases, and creating intuitive user interfaces. I enjoy bridging the gap between backend architecture and frontend experiences, with a focus on clean code, performance, security, and maintainability.
+            </p>
+            <div class="about__facts">
+              <div class="fact glass reveal" data-delay="2"><span class="fact__k">Focus</span><span class="fact__v">Software Engineering · Problem Solving · System Design</span></div>
+              <div class="fact glass reveal" data-delay="3"><span class="fact__k">Education</span><span class="fact__v">MCA, PES University</span></div>
+              <div class="fact glass reveal" data-delay="4"><span class="fact__k">Location</span><span class="fact__v">Bengaluru, India</span></div>
+              <div class="fact glass reveal" data-delay="5"><span class="fact__k">Status</span><span class="fact__v accent">Open to work</span></div>
+            </div>
+          </div>
+
+          <div class="code-card glass tilt reveal-right">
+            <div class="code-card__bar">
+              <span></span><span></span><span></span>
+              <em>developer.ts</em>
+            </div>
+<pre class="code-card__body"><code><span class="k">const</span> <span class="v">developer</span> = {
+  name: <span class="s">'Manish Ratan'</span>,
+  role: <span class="s">'Backend & Full-Stack'</span>,
+  education: <span class="s">'MCA @ PES University'</span>,
+  stack: [<span class="s">'Node'</span>, <span class="s">'Java'</span>, <span class="s">'React'</span>, <span class="s">'SQL'</span>],
+  loves: [<span class="s">'clean APIs'</span>, <span class="s">'scalability'</span>],
+  <span class="f">build</span>(idea) {
+    <span class="k">return</span> idea
+      .<span class="f">design</span>()
+      .<span class="f">ship</span>({ reliable: <span class="k">true</span> });
+  },
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Skills</span>
+          <h2 class="section__title">My <span class="accent">toolkit</span></h2>
+        </div>
+
+        <div class="skills">
+          <article class="skill-card glass spotlight reveal" data-delay="0">
+            <div class="skill-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r=".8"/><circle cx="7" cy="17" r=".8"/></svg></div>
+            <h3>Backend</h3>
+            <p>APIs, services and business logic built to scale.</p>
+            <ul class="tags"><li>Node.js</li><li>Express</li><li>Java</li><li>Spring Boot</li><li>Python</li><li>REST</li></ul>
+          </article>
+          <article class="skill-card glass spotlight reveal" data-delay="1">
+            <div class="skill-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></div>
+            <h3>Frontend</h3>
+            <p>Responsive, accessible and delightful interfaces.</p>
+            <ul class="tags"><li>React</li><li>JavaScript</li><li>TypeScript</li><li>HTML</li><li>CSS</li><li>Tailwind</li></ul>
+          </article>
+          <article class="skill-card glass spotlight reveal" data-delay="2">
+            <div class="skill-card__icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+            <h3>Databases</h3>
+            <p>Data modelling, query tuning and caching.</p>
+            <ul class="tags"><li>MySQL</li><li>PostgreSQL</li><li>MongoDB</li><li>Redis</li></ul>
+          </article>
+          <article class="skill-card glass spotlight reveal" data-delay="3">
+            <div class="skill-card__icon"><svg viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9a4 4 0 0 1-1 9z"/></svg></div>
+            <h3>DevOps &amp; Tools</h3>
+            <p>From commit to production with confidence.</p>
+            <ul class="tags"><li>Git</li><li>Docker</li><li>Linux</li><li>Postman</li><li>AWS</li><li>CI/CD</li></ul>
+          </article>
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span>Node.js</span><span>Java</span><span>Spring Boot</span><span>React</span><span>TypeScript</span><span>PostgreSQL</span><span>MongoDB</span><span>Docker</span><span>Redis</span><span>REST APIs</span><span>Git</span><span>AWS</span>
+            <span>Node.js</span><span>Java</span><span>Spring Boot</span><span>React</span><span>TypeScript</span><span>PostgreSQL</span><span>MongoDB</span><span>Docker</span><span>Redis</span><span>REST APIs</span><span>Git</span><span>AWS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Projects</span>
+          <h2 class="section__title">Things I've <span class="accent">built</span></h2>
+        </div>
+
+        <div class="projects">
+          <!-- Project 1 -->
+          <article class="project glass tilt spotlight reveal" data-delay="0">
+            <div class="project__visual v1">
+              <div class="project__orb"></div>
+              <span class="project__num">01</span>
+            </div>
+            <div class="project__body">
+              <h3>KisanSetu- A Farmer's Friend</h3>
+              <p>An AI-powered agricultural platform designed to help Indian farmers manage farm activities, track income and expenses, monitor livestock production, and make data-driven farming decisions.</p>
+              <ul class="tags"><li>React Native</li><li>Express.js</li><li>Node.js</li><li>MongoDB</li><li>AI/ML</li></ul>
+              <div class="project__links">
+                <a href="https://github.com/ManishRatan17/KisanSetu" target="_blank" rel="noopener" class="link-arrow">Code <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+                <a href="#" class="link-arrow">Live demo <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project glass tilt spotlight reveal" data-delay="1">
+            <div class="project__visual v2">
+              <div class="project__orb"></div>
+              <span class="project__num">02</span>
+            </div>
+            <div class="project__body">
+              <h3>Finpilot</h3>
+              <p>A personal finance analytics platform that simplifies expense tracking, budgeting, and financial analysis through interactive dashboards and intelligent spending insights.</p>
+              <ul class="tags"><li>React</li><li>Express.js</li><li>Node.js</li><li>MongoDB</li></ul>
+              <div class="project__links">
+                <a href="https://github.com/ManishRatan17/Finpilot" target="_blank" rel="noopener" class="link-arrow">Code <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+                <a href="#" class="link-arrow">Live demo <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project glass tilt spotlight reveal" data-delay="2">
+            <div class="project__visual v3">
+              <div class="project__orb"></div>
+              <span class="project__num">03</span>
+            </div>
+            <div class="project__body">
+              <h3>AlgoLens</h3>
+              <p>An interactive Data Structures and Algorithms visualizer that helps users understand complex algorithms through step-by-step animations and visual representations.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Data Structures</li></ul>
+              <div class="project__links">
+                <a href="https://github.com/ManishRatan17/AlgoLens" target="_blank" rel="noopener" class="link-arrow">Code <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+                <a href="#" class="link-arrow">Live demo <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Experience</span>
+          <h2 class="section__title">The <span class="accent">journey</span> so far</h2>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <div class="timeline__line"><span id="timelineFill"></span></div>
+
+          <div class="tl-item reveal">
+            <div class="tl-item__dot"></div>
+            <div class="tl-item__card glass spotlight">
+              <span class="tl-item__date">2025 — Present</span>
+              <h3>Master of Computer Applications</h3>
+              <span class="tl-item__org">PES University</span>
+              <p>Deepening my foundation in distributed systems, databases and software engineering while building full-stack projects.</p>
+            </div>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-item__dot"></div>
+            <div class="tl-item__card glass spotlight">
+              <span class="tl-item__date">2025</span>
+              <h3>Frontend Developer Intern</h3>
+              <span class="tl-item__org">NexusKraft</span>
+              <p>Worked on developing responsive and user-friendly web interfaces using React.js, JavaScript, HTML, and CSS. Focused on UI implementation, component development, and improving user experience across devices.</p>
+            </div>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-item__dot"></div>
+            <div class="tl-item__card glass spotlight">
+              <span class="tl-item__date">2022 — 2025</span>
+              <h3>Bachelor's in Computer Applications </h3>
+              <span class="tl-item__org">Jain College</span>
+              <p>Discovered a love for programming, data structures and building things for the web.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact glass">
+          <div class="contact__glow" aria-hidden="true"></div>
+          <div class="contact__info">
+            <span class="eyebrow reveal">Contact</span>
+            <h2 class="section__title reveal">Let's build something <span class="accent">great</span> together.</h2>
+            <p class="reveal" data-delay="1">Have a role, a project or just want to say hi? My inbox is always open.</p>
+            <ul class="contact__list">
+              <li class="reveal" data-delay="2">
+                <span class="contact__ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></span>
+                <a href="mailto:manishratancollege@gmail.com">manishratancollege@<wbr>gmail.com</a>
+              </li>
+              <li class="reveal" data-delay="3">
+                <span class="contact__ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+                <span>Bengaluru, India</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- data-endpoint: the backend URL. Same-origin "/api/contact" when served by server/server.js;
+               use a full URL (https://your-api.onrender.com/api/contact) if the site is hosted elsewhere. -->
+          <form class="form reveal-right" id="contactForm" data-endpoint="/api/contact" data-fallback-email="manishratancollege@gmail.com" novalidate>
+            <div class="field">
+              <input type="text" id="name" name="name" placeholder=" " autocomplete="name" minlength="2" maxlength="100" required aria-describedby="name-error" />
+              <label for="name">Your name</label>
+              <span class="field__error" id="name-error"></span>
+            </div>
+            <div class="field">
+              <input type="email" id="email" name="email" placeholder=" " autocomplete="email" maxlength="254" required aria-describedby="email-error" />
+              <label for="email">Your email</label>
+              <span class="field__error" id="email-error"></span>
+            </div>
+            <div class="field">
+              <textarea id="message" name="message" rows="5" placeholder=" " minlength="10" maxlength="5000" required aria-describedby="message-error"></textarea>
+              <label for="message">Your message</label>
+              <span class="field__error" id="message-error"></span>
+            </div>
+            <!-- spam trap: hidden from people, bots fill it in -->
+            <div class="field--trap" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <button type="submit" class="btn btn--primary btn--block magnetic" id="formSubmit">
+              <span class="btn__label">Send Message</span>
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+            <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Manish Ratan. Crafted with care.</span>
+      <a href="#home" class="back-top magnetic" aria-label="Back to top">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -74,10 +74,4 @@ Tested with Playwright on Chromium, Google Chrome, Microsoft Edge, Brave, Firefo
 Safari/WebKit — desktop (1280–1920px), tablets, iPhone 13 / SE (320px), Pixel 7, Galaxy S9+,
 light and dark themes, reduced motion, JavaScript disabled, and a failed `script.js` load.
 =======
-# ManishRatan-Portfolio
-Personal portfolio showcasing my projects, technical skills, experience, and journey as a developer. Built using HTML, CSS, JavaScript, and Node.js with a responsive frontend and backend-powered contact form.
->>>>>>> d38b4f188a6e33d62b793d79d6d6c8c9cb762520
-=======
-# ManishRatan-Portfolio
-Personal portfolio showcasing my projects, technical skills, experience, and journey as a developer. Built using HTML, CSS, JavaScript, and Node.js with a responsive frontend and backend-powered contact form.
->>>>>>> d38b4f188a6e33d62b793d79d6d6c8c9cb762520
+

@@ -487,6 +487,8 @@
         signal: controller.signal,
       });
       const json = await res.json().catch(() => ({}));
+      // only show server messages we wrote ourselves (hosts can return {error:{code,…}} objects)
+      if (typeof json.error !== 'string') delete json.error;
 
       if (res.ok && json.ok) {
         form.reset();

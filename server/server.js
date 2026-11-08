@@ -1,7 +1,7 @@
 /**
  * Portfolio backend
  * -----------------
- * - Serves the static portfolio (index.html, styles.css, script.js, resume.pdf …)
+ * - Serves the static portfolio (index.html, styles.css, script.js, favicon.svg)
  * - POST /api/contact  → validates the message, stores a backup copy, and emails it
  * - GET  /api/health   → simple health check for hosting platforms
  *

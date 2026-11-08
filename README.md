@@ -1,6 +1,9 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Manish Ratan — Portfolio
+
+Personal portfolio showcasing my projects, technical skills, experience, and journey as a developer.
+Built with HTML, CSS, JavaScript and Node.js: a responsive frontend and a backend-powered contact form.
+
+Live: https://manish-ratan-portfolio.vercel.app
 
 A static portfolio (`index.html`, `styles.css`, `script.js`) plus a small Node.js backend
 (`server/`) that serves the site and delivers the contact form to email.
@@ -8,7 +11,6 @@ A static portfolio (`index.html`, `styles.css`, `script.js`) plus a small Node.j
 ```
 Portfolio/
 ├── index.html · styles.css · script.js · favicon.svg   ← the website
-├── resume.pdf                                           ← add this (Download Resume button)
 └── server/
     ├── server.js        ← Express app: static site + POST /api/contact
     ├── package.json
@@ -54,7 +56,20 @@ fill time against bots, per-IP rate limiting (5 messages / 15 min), a 16 KB body
 HTML-escaped email output, security headers with a Content-Security-Policy, and every message is
 also appended to `server/data/messages.jsonl` as a backup.
 
-## Deploy
+## Deploy on Vercel (current)
+
+The contact form runs as a serverless function in `api/contact.js` (`server/` is not deployed;
+see `.vercelignore`). In Vercel → Project → Settings → Environment Variables add:
+
+```
+SMTP_USER=manishratancollege@gmail.com
+SMTP_PASS=the-16-character-app-password
+CONTACT_TO=manishratancollege@gmail.com
+```
+
+then redeploy. `GET /api/health` reports `"mail": "smtp"` once it is configured.
+
+## Other hosts
 
 **One service (simplest)** — deploy the whole folder to Render / Railway / Fly.io as a Node app:
 - Root directory: `server` · Build: `npm install` · Start: `npm start`
@@ -73,5 +88,3 @@ also appended to `server/data/messages.jsonl` as a backup.
 Tested with Playwright on Chromium, Google Chrome, Microsoft Edge, Brave, Firefox and
 Safari/WebKit — desktop (1280–1920px), tablets, iPhone 13 / SE (320px), Pixel 7, Galaxy S9+,
 light and dark themes, reduced motion, JavaScript disabled, and a failed `script.js` load.
-=======
-

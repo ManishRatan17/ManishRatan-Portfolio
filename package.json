@@ -1,0 +1,10 @@
+{
+  "name": "manish-ratan-portfolio",
+  "private": true,
+  "type": "module",
+  "description": "Portfolio site + Vercel contact function (api/). The local Express server lives in server/.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  }
+}
